@@ -25,6 +25,7 @@
     <string name="select_poi">Please select a point of interest</string>
     <string name="geofence_entered">Geofence Entered</string>
     <string name="geofences_added">Geofences Added</string>
+    <string name="geofences_removed">Geofences Removed</string>
     <string name="channel_name">GeofenceStatus</string>
     <string name="notification_channel_description">Geofence status notification</string>
     <string name="content_text">Location Reminder</string>
@@ -43,4 +44,5 @@
     <string name="geofence_too_many_geofences">Your app has registered too many geofences.</string>
     <string name="geofence_too_many_pending_intents">You have provided too many PendingIntents to the addGeofences() call.</string>
     <string name="error_adding_geofence">Error Happened, Can\'t Add Geofence</string>
+    <string name="geofences_removed_error">Geofences Removed</string>
 </resources>
