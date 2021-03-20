@@ -32,6 +32,16 @@ class ReminderDescriptionActivity : AppCompatActivity() {
             this,
             R.layout.activity_reminder_description
         )
-//        TODO: Add the implementation of the reminder details
+        val intent = intent
+        if (intent.hasExtra(EXTRA_ReminderDataItem)) {
+            val reminderDataItem: ReminderDataItem = intent.getSerializableExtra(
+                    EXTRA_ReminderDataItem
+            ) as ReminderDataItem
+
+            binding.apply {
+                this.reminderDataItem = reminderDataItem
+                executePendingBindings()
+            }
+        }
     }
 }
