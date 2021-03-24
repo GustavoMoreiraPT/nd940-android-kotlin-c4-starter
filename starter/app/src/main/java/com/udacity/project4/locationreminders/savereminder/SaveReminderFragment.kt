@@ -105,7 +105,6 @@ class SaveReminderFragment : BaseFragment() {
         super.onDestroy()
         //make sure to clear the view model after destroy, as it's a single view model.
         _viewModel.onClear()
-        removeGeofences()
     }
 
     override fun onRequestPermissionsResult(
@@ -253,20 +252,6 @@ class SaveReminderFragment : BaseFragment() {
                         Log.w(TAG, it.message ?: "Error")
                     }
                 }
-            }
-        }
-    }
-
-    private fun removeGeofences() {
-        if (!foregroundAndBackgroundLocationPermissionApproved()) {
-            return
-        }
-        geofencingClient.removeGeofences(geofencePendingIntent)?.run {
-            addOnSuccessListener {
-                Log.d(TAG, getString(R.string.geofences_removed))
-            }
-            addOnFailureListener {
-                Log.d(TAG, getString(R.string.geofences_removed_error))
             }
         }
     }
