@@ -151,6 +151,12 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
 
             )
+
+            val location = PointOfInterest(latLng, "CustomPOI", "CustomPOI")
+            this.poi = location
+
+
+            binding.saveButton.isEnabled = true
         }
     }
 
