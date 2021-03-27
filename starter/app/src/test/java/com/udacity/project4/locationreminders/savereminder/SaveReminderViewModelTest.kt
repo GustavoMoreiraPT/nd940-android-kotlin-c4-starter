@@ -13,6 +13,7 @@ import com.udacity.project4.locationreminders.data.FakeDataSource
 import com.udacity.project4.locationreminders.getOrAwaitValue
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -73,5 +74,18 @@ class SaveReminderViewModelTest {
         viewModel.validateAndSaveReminder(reminder)
 
         assert(viewModel.showSnackBarInt.getOrAwaitValue() == R.string.err_select_location)
+    }
+
+    @Test
+    fun saveReminderWhenLoadingIsShown() = runBlockingTest {
+        mainCoroutineRule.pauseDispatcher()
+
+        viewModel.saveReminder(FakeData.reminder)
+
+        assert(viewModel.showLoading.getOrAwaitValue() == true)
+
+        mainCoroutineRule.resumeDispatcher()
+
+        assert(viewModel.showLoading.getOrAwaitValue() == false)
     }
 }

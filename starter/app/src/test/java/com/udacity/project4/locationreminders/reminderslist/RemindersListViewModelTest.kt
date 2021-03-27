@@ -3,6 +3,7 @@ package com.udacity.project4.locationreminders.reminderslist
 import android.app.Application
 import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.util.concurrent.FakeTimeLimiter
 import com.udacity.project4.locationreminders.FakeData
@@ -35,12 +36,14 @@ class RemindersListViewModelTest {
 
     private lateinit var viewModel: RemindersListViewModel
 
+    private lateinit var context: Application
+
     @Before
     fun setup() {
         stopKoin()
-        val applicationMock = Mockito.mock(Application::class.java)
+        context = ApplicationProvider.getApplicationContext()
         repository = FakeDataSource()
-        viewModel = RemindersListViewModel(applicationMock, repository)
+        viewModel = RemindersListViewModel(context, repository)
     }
 
 
@@ -54,5 +57,27 @@ class RemindersListViewModelTest {
         viewModel.loadReminders()
 
         assert(viewModel.remindersList.getOrAwaitValue().size == 3)
+    }
+
+
+    @Test
+    fun loadRemindersNoItemsExistThenRemindersListIsEmpty() = runBlockingTest {
+        viewModel.loadReminders()
+        val existingReminders = viewModel.remindersList.getOrAwaitValue()
+        assert(existingReminders.isEmpty())
+    }
+
+    @Test
+
+    fun loadRemindersAndShowLoadingIsShown() = runBlockingTest {
+        mainCoroutineRule.pauseDispatcher()
+
+        viewModel.loadReminders()
+
+        assert(viewModel.showLoading.getOrAwaitValue() == true)
+
+        mainCoroutineRule.resumeDispatcher()
+
+        assert(viewModel.showLoading.getOrAwaitValue() == false)
     }
 }
